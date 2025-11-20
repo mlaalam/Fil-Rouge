@@ -10,9 +10,7 @@ Recherche d’artisans par catégorie et localisation
 
 Consultation des profils artisans
 
-Contact direct via téléphone ou WhatsApp
-
-Système d’avis + notation (1–5)
+Contact direct via WhatsApp
 
 Consultation des projets réalisés par l’artisan
 
