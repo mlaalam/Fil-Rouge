@@ -65,6 +65,8 @@ MySQL
 
 📦 Livrables du projet Khadmalink 
 
+Cahier des Charges : https://docs.google.com/document/d/1MoDXe-zYxXWqxii-8DHKQ8xAF-30B9ZL5TWSSo3k8Pw/edit?hl=fr&tab=t.0
+
 Jira :https://laalammouad.atlassian.net/jira/software/c/projects/KHAD/boards/34/timeline?atlOrigin=eyJpIjoiMTM3OWYzZjliYjQ2NDFiZDg1YTg4NjUyNDM0ODhkN2QiLCJwIjoiaiJ9
 
 UML Complet :
