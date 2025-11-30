@@ -37,7 +37,7 @@ Statistiques générales (nb artisans, clients, avis)
 🏗️ Architecture technologique
 🔙 Backend (Laravel 10)
 
-Laravel Breeze + Sanctum (auth)
+Laravel Sanctum (auth)
 
 Eloquent ORM
 
