@@ -71,9 +71,10 @@ Jira :https://laalammouad.atlassian.net/jira/software/c/projects/KHAD/boards/34/
 
 UML Complet : https://lucid.app/lucidchart/004ff52b-29a9-4b9f-9f72-ebd913ad98c6/edit?invitationId=inv_1b1b55b0-e248-4fee-ad8b-a1ccae1f10ca&page=0_0#
 
-Maquettes Figma : <a href="https://www.figma.com/design/V2d5FnDdhLOirkCTLIHKG1/Fil-Rouge?node-id=0-1&p=f&t=w0xkk0pfl4SCHgYg-00"></a>
+Maquettes Figma : https://www.figma.com/design/V2d5FnDdhLOirkCTLIHKG1/Fil-Rouge?node-id=0-1&p=f&t=w0xkk0pfl4SCHgYg-00
 
 Mouad LAALAM — Développeur Fullstack / Chef de projet
+
 Salma HARDA — Superviseure académique
 
 
