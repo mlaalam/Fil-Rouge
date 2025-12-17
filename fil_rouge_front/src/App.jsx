@@ -1,41 +1,30 @@
 
 import { useState } from 'react'
 import './App.css'
+import Navbar from './layouts/navbar'
+import Footer from './layouts/Footer'
+import { Route, Routes } from 'react-router-dom'
+import AccueilPage from './pages/AccueilPage'
+import ServicePape from './pages/ServicePape'
+import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/LoginPage'
+
 
 function App() {
-const [rating , setRating] = useState('')
-const [comment , setComment] = useState('')
+
 
   return (
     <>
-      <h1 className='text-3xl text-green-600 mx-auto'>Fil Rouge</h1>
-      <div>
-  <h3>Laisser un avis</h3>
-
-  <div>
-    {[1,2,3,4,5].map((star) => (
-      <span
-        key={star}
-        onClick={() => setRating(star)}
-        style={{
-          cursor: 'pointer',
-          fontSize: '30px',
-          color: star <= rating ? '#FFD700' : '#ccc'
-        }}
-      >
-        ★
-      </span>
-    ))}
-  </div>
-
-  <textarea
-    placeholder="Écrire un commentaire…"
-    value={comment}
-    onChange={(e) => setComment(e.target.value)}
-  />
-
-  {/* <button onClick={submitReview}>Envoyer</button> */}
-</div>
+    <Navbar />
+      <main className="pt-20">
+        <Routes>
+          <Route path='/' element={<AccueilPage />} />
+          <Route path='/services' element={<ServicePape />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/login' element={<LoginPage />} />
+        </Routes>
+      </main>
+    <Footer />
     </>
   )
 }

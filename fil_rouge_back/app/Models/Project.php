@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['title','description','image','artisan_id','category_id'];
+
+    public function user(){
+      return $this->belongsTo(User::class);
+    }
+    public function commentaires(){
+      return $this->hasMany(Commentaire::class);
+    }
+    public function category(){
+      return $this->belongsTo(Category::class);
+    }
 }

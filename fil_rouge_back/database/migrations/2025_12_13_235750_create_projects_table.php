@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('image');
             $table->foreignId('artisan_id')->references('id')->on('users');
+            $table->foreignId('catigory_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

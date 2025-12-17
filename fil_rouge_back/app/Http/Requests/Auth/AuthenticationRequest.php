@@ -24,6 +24,8 @@ class AuthenticationRequest extends FormRequest
         return [
           'nom' => 'required|min:3|string',
           'prenom' => 'required|min:3|string',
+          'numero' => 'required|min:9',
+          'role' => 'required|in:client,artisan',
           'email' => 'required|email|unique:users,email',
           'password' => 'required|min:6|confirmed',
         ];
@@ -33,6 +35,7 @@ class AuthenticationRequest extends FormRequest
         'nom.required' => 'Le nom est obligatoire.',
         'pernom.required' => 'Le prenom est obligatoire.',
         'email.required' => 'L’email est obligatoire.',
+        'numero.required' => 'Le numero est obligatoire.',
         'email.unique' => 'Cet email existe déjà.',
         'password.required' => 'Le mot de passe est obligatoire.',
         'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
