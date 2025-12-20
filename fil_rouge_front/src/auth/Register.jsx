@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RegisterUser, resetRegister } from "../slices/RegisterSlice";
+import { RegisterUser } from "../slices/RegisterSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
    const dispatch = useDispatch();
   const { loading, success, fieldErrors } = useSelector(
     (state) => state.register
   );
+  const navigate = useNavigate();
   const [role, setRole] = useState("client");
-  const [nom,setNom] = useState('');
-  const [prenom,setPrenom] = useState('');
+  const [nom_complet,setNomCcomplet] = useState('');
   const [email,setEmail] = useState('');
   const [numero,setNumero] = useState('');
   const [password,setPassword] = useState('');
@@ -18,14 +19,14 @@ export default function Register() {
   const hendleSubmit = async (e) =>{
       e.preventDefault();
       dispatch(
-        RegisterUser({ nom, prenom, email, role, numero, password ,passwordConfirm })
+        RegisterUser({ nom_complet, email, role, numero, password ,passwordConfirm })  
       )
   }
     useEffect(() => {
     if (success) {
-      dispatch(resetRegister());
+      navigate('/')
     }
-  }, [success, dispatch]);
+  }, [success]);
 
   return (
     <div className="min-h-screen bg-[#F6EFE9] flex items-center justify-center px-4">
@@ -63,24 +64,14 @@ export default function Register() {
         </div>
         
           <div>
-            <label className="font-semibold">Nom</label>
+            <label className="font-semibold">Nom complet</label>
             <input
               type="text"
-              placeholder="Votre nom"
-              onChange={(e)=>setNom(e.target.value)}
+              placeholder="Votre nom complet"
+              onChange={(e)=>setNomCcomplet(e.target.value)}
               className="w-full mt-1 px-4 py-3 border rounded-full outline-none focus:ring-2 focus:ring-orange-400"
             />
-            {fieldErrors.nom && <p className="text-red-500">{fieldErrors.nom}</p>}
-          </div>
-          <div>
-            <label className="font-semibold">Prenom</label>
-            <input
-              type="text"
-              placeholder="Votre prenom"
-              onChange={(e)=>setPrenom(e.target.value)}
-              className="w-full mt-1 px-4 py-3 border rounded-full outline-none focus:ring-2 focus:ring-orange-400"
-            />
-            {fieldErrors.prenom && <p className="text-red-500">{fieldErrors.prenom}</p>}
+            {fieldErrors.nom_complet && <p className="text-red-500">{fieldErrors.nom_complet}</p>}
           </div>
           <div>
             <label className="font-semibold">Email</label>
@@ -122,19 +113,7 @@ export default function Register() {
             />
             {fieldErrors.password && <p className="text-red-500">{fieldErrors.password}</p>}
           </div>
-          <div className="flex items-start gap-2 text-sm">
-            <input type="checkbox" className="mt-1" />
-            <p>
-              J'accepte les{" "}
-              <span className="underline cursor-pointer">
-                conditions d'utilisation
-              </span>{" "}
-              et la{" "}
-              <span className="underline cursor-pointer">
-                politique de confidentialité
-              </span>
-            </p>
-          </div>
+          
           <button
             type="submit"
              disabled={loading}

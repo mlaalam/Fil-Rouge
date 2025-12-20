@@ -22,9 +22,8 @@ class AuthenticationRequest extends FormRequest
     public function rules(): array
     {
         return [
-          'nom' => 'required|min:3|string',
-          'prenom' => 'required|min:3|string',
-          'numero' => 'required|min:9',
+          'nom_complet' => 'required|min:3|string',
+          'numero' => 'required|min:9|numeric',
           'role' => 'required|in:client,artisan',
           'email' => 'required|email|unique:users,email',
           'password' => 'required|min:6|confirmed',
@@ -32,10 +31,10 @@ class AuthenticationRequest extends FormRequest
     }
     public function messages(){
       return [
-        'nom.required' => 'Le nom est obligatoire.',
-        'pernom.required' => 'Le prenom est obligatoire.',
+        'nom_complet.required' => 'Le nom est obligatoire.',
         'email.required' => 'L’email est obligatoire.',
         'numero.required' => 'Le numero est obligatoire.',
+        'numero.numeric' => 'Le numéro doit contenir uniquement des chiffres.',
         'email.unique' => 'Cet email existe déjà.',
         'password.required' => 'Le mot de passe est obligatoire.',
         'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',

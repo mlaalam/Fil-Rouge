@@ -8,7 +8,7 @@ export const LoginUser = createAsyncThunk(
       const res = await auth.login(email, password);
       if (res?.data?.token) {
         localStorage.setItem("auth_token", res.data.token);
-        localStorage.setItem("role", res.data.user.role);
+        localStorage.setItem("role", res.data.user);
       }
       return res.data;
     } catch (err) {
@@ -34,16 +34,7 @@ const initialState = {
 const LoginSlice = createSlice({
   name: "login",
   initialState,
-  reducers: {
-    resetLogin: (state) => {
-      state.loading = false;
-      state.error = null;
-      state.success = false;
-      state.userInfo = null;
-      state.userToken = null;
-      state.fieldErrors = {};
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(LoginUser.pending, (state) => {
@@ -53,6 +44,7 @@ const LoginSlice = createSlice({
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
         state.loading = false;
+        state.success = true;
         state.userInfo = action.payload.user || action.payload;
         state.userToken = action.payload.token || null;
       })
@@ -64,5 +56,4 @@ const LoginSlice = createSlice({
   },
 });
 
-export const { resetLogin } = LoginSlice.actions;
 export default LoginSlice.reducer;

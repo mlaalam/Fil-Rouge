@@ -3,11 +3,10 @@ import { auth } from "../services/auth";
 
 export const RegisterUser = createAsyncThunk(
   'auth/register',
-  async({nom, prenom, email, role, numero, password ,passwordConfirm},{rejectWithValue})=>{
+  async({nom_complet, email, role, numero, password ,passwordConfirm},{rejectWithValue})=>{
     try{
       const res = await auth.register({
-        nom,
-        prenom,
+        nom_complet,
         email,
         role,
         numero,
@@ -16,6 +15,7 @@ export const RegisterUser = createAsyncThunk(
       });
       if(res?.data?.token){
         localStorage.setItem("auth_token", res.data.token);
+        localStorage.setItem("role", res.data.user);
       }
       return res.data;
     }catch (err) {
@@ -39,15 +39,7 @@ const initialState ={
 const RegisterSlice = createSlice({
   name:'register',
   initialState,
-  reducers:{
-       resetRegister: (state) => {
-          state.loading = false;
-          state.error = null;
-          state.success = false;
-          state.userInfo = null;
-          state.userToken = null;
-        },
-  },
+  reducers:{},
   extraReducers: (builder) => {
       builder.addCase(RegisterUser.pending,(state)=>{
         state.loading = true,
@@ -67,5 +59,4 @@ const RegisterSlice = createSlice({
   }
 })
 
-export const {resetRegister} = RegisterSlice.actions;
 export default RegisterSlice.reducer;

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginUser } from "../slices/LoginSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
   const dispatch = useDispatch();
-  const { loading, error, fieldErrors } = useSelector((state) => state.login);
+  const { loading,success, error, fieldErrors } = useSelector((state) => state.login);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,15 +12,12 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }))
-    .unwrap() 
-    .then(() => {
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log("Login failed", err);
-      });
-    
   };
+  useEffect(() => {
+      if (success) {
+        navigate('/')
+      }
+    }, [success]);
 
   return (
     <div className="min-h-screen bg-[#F6EFE9] flex items-center justify-center px-4">
@@ -58,7 +55,13 @@ export default function Login() {
               <p className="text-red-500">{fieldErrors.password[0]}</p>
             )}
           </div>
-
+          <div className="text-sm text-right">
+            <Link
+              to="/forgot-password"
+              className="text-orange-500 hover:underline font-semibold">
+              Mot de passe oublié ?
+            </Link>
+          </div>
           {error && <p className="text-red-500">{error}</p>}
 
           <button
@@ -72,9 +75,9 @@ export default function Login() {
 
         <p className="text-center text-sm mt-4">
           Vous n'avez pas de compte ?{" "}
-          <a href="/register" className="text-orange-500 font-semibold cursor-pointer">
+          <Link to="/register" className="text-orange-500 font-semibold cursor-pointer">
             Inscrivez-vous
-          </a>
+          </Link>
         </p>
       </div>
     </div>

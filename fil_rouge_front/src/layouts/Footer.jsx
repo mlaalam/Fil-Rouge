@@ -9,11 +9,6 @@ const Footer = () => {
         {/* Logo & Description */}
         <div>
           <div className="flex items-center gap-2 mb-4">
-            {/* <img
-              src={logo}
-              alt="KhadmaLink"
-              className="h-10 w-10"
-            /> */}
             <img className="h-16 w-auto rounded-lg" src={logo} alt="image logo" />
             <span className="text-white text-lg font-semibold">
               KhadmaLink

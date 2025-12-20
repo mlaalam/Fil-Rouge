@@ -9,11 +9,9 @@ const Navbar = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="bg-[#FCF6F0] shadow-md fixed top-0 left-0 w-full z-50">
+    <header className="bg-[#FCF6F0] shadow-md  top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-
-          
           <Link
             to="/"
             className="text-2xl font-bold text-[#FA7B0C]"
