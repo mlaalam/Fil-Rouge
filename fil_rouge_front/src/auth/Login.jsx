@@ -2,22 +2,32 @@ import { useState ,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginUser } from "../slices/LoginSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserRole, isAuthenticate } from "../services/auth";
 export default function Login() {
   const dispatch = useDispatch();
-  const { loading,success, error, fieldErrors } = useSelector((state) => state.login);
+  const { loading, error, fieldErrors } = useSelector((state) => state.login);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ email, password }))
   };
+  const isAuth = isAuthenticate();
   useEffect(() => {
-      if (success) {
-        navigate('/')
+      if (isAuth) {
+        const role = getUserRole();
+        if(role === 'admin'){
+          navigate('/dashbord')
+        }else{
+          navigate('/')
+        }
+          
       }
-    }, [success]);
+    }, [isAuth]);
 
   return (
     <div className="min-h-screen bg-[#F6EFE9] flex items-center justify-center px-4">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticationController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,11 @@ Route::controller(AuthenticationController::class)->group(function(){
     Route::post('forget','forgetPassword');
     Route::post('update_pass','updatePassword');
 });
+
+Route::controller(CategoryController::class)->group(function(){
+  Route::get('categories','index');
+  Route::post('categories','store');
+  Route::put('categories/{id}','update');
+  Route::delete('categories/{id}','destroy');
+});
+

@@ -27,7 +27,6 @@ const initialState = {
   userInfo: null,
   userToken: null,
   error: null,
-  success: false,
   fieldErrors: {},
 };
 
@@ -44,7 +43,6 @@ const LoginSlice = createSlice({
       })
       .addCase(LoginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
         state.userInfo = action.payload.user || action.payload;
         state.userToken = action.payload.token || null;
       })

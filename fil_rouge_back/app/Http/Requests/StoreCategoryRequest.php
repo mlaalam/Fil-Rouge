@@ -11,7 +11,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' =>'required|string|min:3',
+            'icon'  => 'required|nullable|image|mimes:png,jpg,jpeg,svg',
         ];
+    }
+    public function message(){
+      return[
+        'title.required' => 'title est obligatoire.',
+      ];
     }
 }

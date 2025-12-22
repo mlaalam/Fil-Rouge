@@ -1,13 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.jpg";
+import { getUserRole, isAuthenticate } from "../services/auth";
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const role = getUserRole();
+  const isAuth = isAuthenticate();
+  const hendleLogout = () =>{
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('role');
+    navigate('/')
+    
+  }
+
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
-
   return (
     <header className="bg-[#FCF6F0] shadow-md  top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4">
@@ -31,19 +42,31 @@ const Navbar = () => {
             {/* <Link to="/dashboard" className="text-gray-700 hover:text-indigo-600">
               Admin Panel
             </Link> */}
-
-            <Link
-              to="/login"
-              className="px-4 py-2 border border-[#FA7B0C] text-[#FA7B0C] rounded-lg hover:bg-[#FA7B0C] hover:text-white"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="px-4 py-2 bg-[#FA7B0C] text-white rounded-lg hover:bg-[#FA7B0C]"
-            >
-              Register
-            </Link>
+            {!isAuth
+              ? (
+                <>
+                <Link
+                  to="/login"
+                  className="px-4 py-2 border border-[#FA7B0C] text-[#FA7B0C] rounded-lg hover:bg-[#FA7B0C] hover:text-white"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 bg-[#FA7B0C] text-white rounded-lg hover:bg-[#FA7B0C]"
+                >
+                  Register
+                </Link>
+              </>
+          
+              ):
+                <button
+                  onClick={hendleLogout}
+                  className="px-4 py-2 bg-red-400 text-white rounded-lg"
+                >
+                  Logout
+                </button>
+            }
           </nav>
 
           {/* Mobile Button */}

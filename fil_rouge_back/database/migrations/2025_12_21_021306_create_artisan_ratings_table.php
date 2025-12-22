@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('artisan_ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('icon')->nullable();
+            $table->foreignId('artisan_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
+            $table->tinyInteger('rating'); 
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('artisan_ratings');
     }
 };

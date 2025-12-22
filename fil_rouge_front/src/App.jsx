@@ -9,14 +9,16 @@ import ServicePape from './pages/ServicePape'
 import RegisterPage from './pages/RegisterPage'
 import LoginPage from './pages/LoginPage'
 import ForgetPassword from './auth/forgetPassword'
+import PageDashbord from './pages/admin/PageDashbord'
+import { getUserRole } from './services/auth'
 
 
 function App() {
-
+const role = getUserRole();
 
   return (
     <div className='bg-gradient-to-br from-[#f9c999] to-white'>
-    <Navbar />
+    {role === 'admin'? '' : <Navbar />}
       <main className="">
         <Routes>
           <Route path='/' element={<AccueilPage />} />
@@ -24,9 +26,10 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/forgot-password' element={<ForgetPassword />} />
+          <Route path='/dashbord' element={<PageDashbord />} />
         </Routes>
       </main>
-    <Footer />
+    {role === 'admin'? '' : <Footer />}
     </div>
   )
 }
