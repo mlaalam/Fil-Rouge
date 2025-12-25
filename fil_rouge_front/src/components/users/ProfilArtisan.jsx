@@ -1,0 +1,155 @@
+import artis from "../../assets/images/elictric.PNG";
+import { FaWhatsapp } from "react-icons/fa";
+import { FaPhoneSquareAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { LiaCertificateSolid } from "react-icons/lia";
+import { LuClock3 } from "react-icons/lu";
+const StatBox = ({ title, value, green }) => (
+  <div className="bg-white rounded-xl p-4 text-center shadow-sm">
+    <p className="text-sm text-gray-500">{title}</p>
+    <p
+      className={`font-bold ${
+        green ? "text-green-500" : "text-[#1D2B53]"
+      }`}
+    >
+      {value}
+    </p>
+  </div>
+);
+
+export default function ProfilArtisan() {
+  return (
+    <div className=" min-h-screen py-10 px-4">
+      <div className="max-w-6xl mx-auto space-y-8">
+        <div className="bg-[#F3EADF] rounded-2xl p-6 flex flex-col md:flex-row gap-6">
+
+  <div className="w-full md:w-1/3 flex flex-col">
+    <img
+      src={artis}
+      alt="artisan"
+      className="rounded-xl w-full h-64 object-cover"
+    />
+
+    <button className="mt-4 w-full border-2 border-orange-500 text-orange-500 font-semibold py-2 rounded-full hover:bg-orange-500 hover:text-white transition flex justify-center items-center gap-2">
+      <FaWhatsapp /> WhatsApp
+    </button>
+  </div>
+
+  <div className="flex-1 space-y-3">
+    <h2 className="text-2xl font-bold text-[#1D2B53]">
+      Mohamed Ahmed
+    </h2>
+
+    <p className="text-blue-600 font-medium">Plomberie</p>
+
+    <p className="flex items-center gap-2 text-gray-600">
+      <FaLocationDot /> Casablanca
+    </p>
+
+
+    <div className="flex items-center gap-2">
+      <div className="flex text-yellow-400 text-lg">★★★☆☆</div>
+      <span className="text-sm text-gray-600">
+        3.0 (120 avis)
+      </span>
+    </div>
+
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+      <StatBox title="Expérience" value="15+ ans" />
+      <StatBox title="Projets" value="120 complétés" />
+      <StatBox title="Réponse" value="< 2 heures" green />
+    </div>
+  </div>
+
+</div>
+
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+
+          <div className="bg-white rounded-xl p-6 shadow-sm md:col-span-2">
+            <h3 className="font-bold mb-2">À propos</h3>
+            <p className="text-gray-600 text-sm">
+              Artisan expérimenté avec plus de 15 ans d'expertise en plomberie
+              générale et installations sanitaires.
+            </p>
+
+            <p className="mt-4 flex items-center gap-2 text-sm flex justify-start items-center gap-2">
+              <FaPhoneSquareAlt className=" rounded-full w-5 h-5"/> +212 6 XX XX XX XX
+            </p>
+          </div>
+
+      
+          <div className="bg-white rounded-xl p-6 shadow-sm space-y-3">
+            <p className="flex items-center gap-2 font-semibold flex justify-start items-center gap-2">
+              <LiaCertificateSolid className="w-4 h-4" /> Artisan Certifié
+            </p>
+            <p className="flex items-center gap-2 font-semibold flex justify-start items-center gap-2">
+              <LuClock3 className="w-4 h-4" /> Ponctuel
+            </p>
+          </div>
+
+  
+          <div className="bg-white rounded-xl p-6 shadow-sm md:col-span-2">
+            <h3 className="font-bold mb-4">Services proposés</h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                "Installation robinetterie",
+                "Tuyauterie",
+                "Réparation fuites",
+                "Installation chauffe-eau",
+                "Installation piscine",
+                "Débouchage",
+              ].map((service) => (
+                <span
+                  key={service}
+                  className="bg-orange-200 text-sm font-medium px-4 py-2 rounded-full flex items-center gap-2"
+                >
+                  ✔ {service}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-sm">
+            <h3 className="font-bold mb-4">Avis clients</h3>
+
+            {[
+              {
+                name: "Zineb K.",
+                text: "Travail impeccable et professionnel. Je recommande vivement!",
+                stars: 4,
+                time: "2 semaines",
+              },
+              {
+                name: "Hassan M.",
+                text: "Bon service. Quelques petits ajustements auraient été appréciés.",
+                stars: 4,
+                time: "1 mois",
+              },
+              {
+                name: "Amina T.",
+                text: "Très satisfait. Mohamed est ponctuel et efficace.",
+                stars: 5,
+                time: "2 mois",
+              },
+            ].map((review, i) => (
+              <div key={i} className="mb-4">
+                <div className="flex justify-between">
+                  <p className="font-semibold">{review.name}</p>
+                  <div className="text-yellow-400">
+                    {"★".repeat(review.stars)}
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600">{review.time}</p>
+                <p className="text-sm mt-1">{review.text}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,7 +1,6 @@
 import man from '../assets/images/utilisateur.png'
 import { FaLocationDot } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa";
-import { motion } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 function TopArtusan() {
   
@@ -9,11 +8,6 @@ function TopArtusan() {
 
   return (
     <section className="mx-auto max-w-[80%] mb-18">
-      <motion.div
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="bg-gradient-to-br from-blue-200 to-white rounded-xl shadow-md p-4"
-        >
           <h1 className="text-[#FA7B0C] text-2xl font-bold">Top artisan</h1>
         <p className=" mb-8">Les professionnels les mieux notés par nos clients</p>
       <div className=" mx-auto grid grid-cols-1 md:grid-cols-5 gap-6 place-items-center ">
@@ -63,7 +57,6 @@ function TopArtusan() {
             <div className='w-full bg-[#FA7B0C] rounded-full mx-auto flex justify-center items-center gap-2'><FaRegEye className='text-white' /><button className='text-white font-semibold h-10'>Voir profil</button></div>
         </div>
       </div>  
-      </motion.div>
       
     </section>
   )

@@ -1,11 +1,17 @@
 import React from 'react'
-import Dashbord from '../../components/admin/Dashbord'
+import Dashbord from '../../layouts/Dashbord'
+
 
 function PageDashbord() {
   return (
-    <div>
+    <>
+    <layout>
       <Dashbord />
-    </div>
+    </layout>
+    <main>
+        
+    </main>
+    </>
   )
 }
 

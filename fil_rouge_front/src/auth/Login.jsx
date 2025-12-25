@@ -21,7 +21,8 @@ export default function Login() {
       if (isAuth) {
         const role = getUserRole();
         if(role === 'admin'){
-          navigate('/dashbord')
+          navigate('/admin')
+          window.location.reload();
         }else{
           navigate('/')
         }

@@ -5,7 +5,7 @@ const CommentCard = () => {
   const [rating, setRating] = useState(0);
 
   return (
-    <div className="flex flex-col bg-white rounded-xl p-4 w-full md:h-[260px] md:overflow-y-auto">
+    <div className="flex flex-col bg-white rounded-xl p-4 w-full ">
       
       <h4 className="font-semibold text-lg mb-4 text-center">
         Ajouter un commentaire
@@ -21,7 +21,7 @@ const CommentCard = () => {
           />
         ))}
       </div>
-
+{/* 
       <input
         type="text"
         placeholder="Votre nom"
@@ -32,7 +32,7 @@ const CommentCard = () => {
         type="text"
         placeholder="Votre ville"
         className="w-full border rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-[#FA7B0C]"
-      />
+      /> */}
 
       <textarea
         placeholder="Votre commentaire"

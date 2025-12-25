@@ -49,23 +49,33 @@ const Navbar = () => {
                   to="/login"
                   className="px-4 py-2 border border-[#FA7B0C] text-[#FA7B0C] rounded-lg hover:bg-[#FA7B0C] hover:text-white"
                 >
-                  Login
+                  Connexion
                 </Link>
                 <Link
                   to="/register"
                   className="px-4 py-2 bg-[#FA7B0C] text-white rounded-lg hover:bg-[#FA7B0C]"
                 >
-                  Register
+                  Inscrivez-vous
                 </Link>
               </>
           
-              ):
-                <button
-                  onClick={hendleLogout}
-                  className="px-4 py-2 bg-red-400 text-white rounded-lg"
-                >
-                  Logout
-                </button>
+              ):(
+                <>
+                  {role==='artisan' ? 
+                    <Link to="users/dashbord" className="text-gray-700 hover:text-[#FA7B0C]">
+                      Dashbord
+                    </Link>   :
+                    ''
+                }
+                  <button
+                    onClick={hendleLogout}
+                    className="px-4 py-2 bg-red-400 text-white rounded-lg"
+                  >
+                    Déconnexion
+                  </button>
+                </>
+              )
+                
             }
           </nav>
 
