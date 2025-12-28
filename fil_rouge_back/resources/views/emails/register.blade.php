@@ -5,7 +5,7 @@
     <title>Bienvenue sur KhadmaLink</title>
 </head>
 <body>
-    <p>Bonjour {{ $user->prenom }},</p>
+    <p>Bonjour {{ $user->nom_complet }},</p>
 
     <p>
         Bienvenue sur <strong>KhadmaLink</strong> !

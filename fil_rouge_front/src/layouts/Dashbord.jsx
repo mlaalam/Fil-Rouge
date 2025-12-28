@@ -5,6 +5,7 @@ import { FaUsers } from "react-icons/fa6";
 import { BsStack } from "react-icons/bs";
 import { FaBriefcase } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
+import { getUserName} from "../services/auth";
 function Dashbord({ userName = 'Mouad Laalam' }) {
   const navigate = useNavigate();
 
@@ -13,7 +14,7 @@ function Dashbord({ userName = 'Mouad Laalam' }) {
     navigate('/');
     window.location.reload();
   };
-
+const user = getUserName();
   const linkClass = ({ isActive }) =>
     `font-semibold flex justify-center items-center gap-2 rounded-xl w-full px-4 py-2
      ${isActive ? "bg-[#007B83] text-white" : "text-gray-600 hover:bg-blue-100"}`;
@@ -45,12 +46,12 @@ function Dashbord({ userName = 'Mouad Laalam' }) {
 
         <div className="flex items-center gap-2 mt-auto w-full">
           <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
-            {userName
+            {user
               .split(' ')
               .map((n) => n[0])
               .join('')}
           </div>
-          <span className="text-gray-700 font-semibold">Admin Mouad</span>
+          <span className="text-gray-700 font-semibold">{user}</span>
         </div>
 
         <div className="flex items-center w-full">

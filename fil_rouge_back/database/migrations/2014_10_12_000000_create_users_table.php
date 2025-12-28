@@ -16,9 +16,14 @@ return new class extends Migration
             $table->string('nom_complet');
             $table->string('ville')->nullable();
             $table->string('numero',10)->nullable();
-            $table->string('image')->nullable();
+            $table->string('image')->default('https://res.cloudinary.com/dh8xcvzyi/image/upload/v1766824986/utilisateur_teny5x.png');
+            $table->string('status')->default('En attente');
+            $table->string('secteur')->nullable();
+            $table->text('propos')->nullable();
+            $table->unsignedTinyInteger('jours_de_travail')->nullable(); 
+            $table->unsignedTinyInteger('heures_par_jour')->nullable();  
             $table->string('email')->unique();
-            $table->boolean('status')->default(0);
+            $table->boolean('disponibilite')->default(0);
             $table->enum('role',['artisan','client','admin'])->default('client');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

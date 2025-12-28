@@ -11,7 +11,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'image' => 'sometimes|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

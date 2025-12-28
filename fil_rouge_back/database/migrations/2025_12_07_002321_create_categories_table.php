@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('icon')->nullable();
+            $table->foreignId('artisan_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

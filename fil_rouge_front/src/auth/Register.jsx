@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../slices/RegisterSlice";
 import { useNavigate } from "react-router-dom";
 import artis from '../assets/images/elictric.PNG'
-import { getUserRole, isAuthenticate } from "../services/auth";
+import {getUserRole, isAuthenticate } from "../services/auth";
 export default function Register() {
    const dispatch = useDispatch();
   const { loading, fieldErrors } = useSelector(
@@ -26,7 +26,12 @@ export default function Register() {
   const isAuth = isAuthenticate();
   useEffect(() => {
     if (isAuth) {
-        navigate('/')
+        const isRole = getUserRole();
+        if(isRole === 'admin'){
+          navigate('/admin')
+        }else{
+          navigate('/')
+        }
     }
   }, [isAuth]);
 

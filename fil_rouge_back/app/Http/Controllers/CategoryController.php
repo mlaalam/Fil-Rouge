@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 
 class CategoryController extends Controller
@@ -26,13 +28,16 @@ class CategoryController extends Controller
     {
       
       try{
-          $uploadIcon = Cloudinary::upload(
+        $user = Auth::user();
+        Gate::authorize('create',Category::class);
+        $uploadIcon = Cloudinary::upload(
                 $request->file('icon')->getRealPath()
             );
-            $iconUrl = $uploadIcon->getSecurePath();
+        $iconUrl = $uploadIcon->getSecurePath();
         $categ = Category::create([
           'title' => $request->title,
-          'icon' => $iconUrl
+          'icon' => $iconUrl,
+          'artisan_id' => $user->id
         ]);
         return response()->json(['message'=>'category is create seccussfuly' ,'categories'=>$categ]);
       }catch(\Exception $e){
@@ -58,25 +63,26 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category ,$id)
     { 
       try{
-        $categ = Category::find($id);
-        if (!$categ) {
+        $category = Category::find($id);
+        if (!$category) {
             return response()->json([
                 'message' => 'Category not found'
             ], 404);
         }
+        Gate::authorize('update',$category);
          if ($request->hasFile('icon')) {
             $iconUrl = Cloudinary::upload(
                 $request->file('icon')->getRealPath()
             )->getSecurePath();
-            $categ->icon = $iconUrl;
+            $category->icon = $iconUrl ?? $category->icon ;
         }
-        $categ->title = $request->title;
-        $categ->save();
-        return response()->json(['message'=>'category is update seccussfuly' ,'categories'=>$categ]);
+        $category->title = $request->title ?? $category->title;
+        $category->save();
+        return response()->json(['message'=>'category is update seccussfuly' ,'categories'=>$category]);
       }catch(\Exception $e){
           return response()->json([
           "success"=>false,
-          'message' => 'Erreur lors de la création: ' . $e->getMessage()
+          'message' => 'Erreur update is not seccussfuly: ' . $e->getMessage()
         ],500);
       }
         
@@ -87,13 +93,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category , $id)
     {
-        $categ = Category::find($id);
-        if (!$categ) {
+        $category = Category::find($id);
+        if (!$category) {
             return response()->json([
                 'message' => 'Category not found'
             ], 404);
         }
-        $categ->delete();
-        return response()->json(['message'=>'category is delete seccussfuly' ,'categories'=>$categ]);
+        Gate::authorize('delete',$category);
+        $category->delete();
+        return response()->json(['message'=>'category is delete seccussfuly' ,'categories'=>$category]);
       }
 }

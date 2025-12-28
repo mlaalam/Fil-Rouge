@@ -23,6 +23,9 @@ class User extends Authenticatable
         'numero',
         'image',
         'status',
+        'disponibilite',
+        'heures_par_jour',
+        'jours_de_travail',
         'role',
         'email',
         'password',
@@ -50,10 +53,16 @@ class User extends Authenticatable
 
 
     public function projects(){
-      return $this->hasMany(Project::class);
+      return $this->hasMany(Project::class,'artisan_id');
+    }
+    public function categories(){
+      return $this->hasMany(Category::class ,'artisan_id');
     }
     public function commentaires(){
-      return $this->hasMany(Commentaire::class);
+      return $this->hasMany(Commentaire::class ,'user_id');
+    }
+    public function services(){
+      return $this->hasMany(Services::class ,'artisan_id');
     }
 
 }

@@ -29,7 +29,7 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'artisan';
     }
 
     /**
@@ -37,7 +37,7 @@ class ProjectPolicy
      */
     public function update(User $user, Project $project): bool
     {
-        //
+        return $user->role === 'admin' || $user->id === $project->artisan_id;
     }
 
     /**
@@ -45,15 +45,15 @@ class ProjectPolicy
      */
     public function delete(User $user, Project $project): bool
     {
-        //
+        return $user->role === 'admin' || $user->id === $project->artisan_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Project $project): bool
+    public function done(User $user, Project $project): bool
     {
-        //
+        return $user->role === 'admin' || $user->id === $project->artisan_id;
     }
 
     /**

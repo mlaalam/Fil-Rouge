@@ -20,15 +20,16 @@ class AuthenticationController extends Controller
               'email'=>$request->email,
               'numero'=>$request->numero,
               'role'=>$request->role,
+              'image' => 'images/profileart.jpg',
               'password'=>$request->password,
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
             // RegisterEvent::dispatch($user);
-            return response()->json(['messages'=>'register is successfuly','user'=>$user->role,'token'=>$token],200);
+            return response()->json(['messages'=>'register is successfuly','role'=>$user->role,'user'=>$user->nom_complet, 'user_id' =>$user->id,'token'=>$token],200);
         }catch(\Exception $e){
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur lors de la création: ' . $e->getMessage()
+                'message' => 'Error while creating: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -52,7 +53,9 @@ class AuthenticationController extends Controller
             return response()->json([
               'success' => true,
               'token'=>$token,
-              'user'=>$user->role
+              'user'=>$user->nom_complet,
+              'role'=>$user->role,
+              'user_id' =>$user->id
             ],200);
       }catch(\Exception $e){
         return response()->json([

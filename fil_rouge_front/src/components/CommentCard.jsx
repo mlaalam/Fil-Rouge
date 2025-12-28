@@ -36,8 +36,9 @@ const CommentCard = () => {
 
       <textarea
         placeholder="Votre commentaire"
-        rows="3"
-        className="w-full border rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#FA7B0C]"
+        rows={2}
+        
+        className="w-full border rounded-lg px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#FA7B0C] resize-none"
       />
 
       <button className="w-full bg-[#FA7B0C] text-white font-semibold py-2 rounded-full hover:opacity-90">

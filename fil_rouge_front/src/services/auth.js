@@ -17,5 +17,14 @@ export const isAuthenticate = () =>{
 
 export const getUserRole = () =>{
   const role = localStorage.getItem('role');
-  return role;
+  return role ;
+}
+
+export const getUserName = () =>{
+  const user = localStorage.getItem('user');
+  return user;
+}
+export const getUserId = () =>{
+  const user_id = localStorage.getItem('user_id');
+  return user_id;
 }

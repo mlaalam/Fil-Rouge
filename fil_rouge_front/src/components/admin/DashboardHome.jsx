@@ -6,7 +6,20 @@ import { FaPlus } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { MdBlock } from "react-icons/md";
 import TableBord from "./TableBord";
+import { useSelector } from "react-redux";
 function DashboardHome() {
+
+  const {data:artisans} = useSelector((state)=>state.artisans);
+    const totalArtisan = artisans.filter(
+    user => user.role === 'artisan'
+  ).length;
+    const totalClient = artisans.filter(
+    user => user.role === 'client'
+  ).length;
+    const totalValidy = artisans.filter(
+    user => user.status === 'pending'
+  ).length;
+
   return (
     <>
       <div className="mx-25 mt-15">
@@ -18,14 +31,14 @@ function DashboardHome() {
           <div className="bg-white w-full h-25 rounded-lg p-4 shadow-[0_10px_25px_rgba(0,123,131,0.4)] flex justify-between items-start">
               <div>
                 <p className="text-gray-400">Total Artisans</p>
-                <span className="text-2xl font-bold text-[#1D2B53]">1,247</span>
+                <span className="text-2xl font-bold text-[#1D2B53]">{totalArtisan}</span>
               </div>
               <div className="bg-[#007B83] text-center p-4 w-12 h-12 rounded-lg"><FaHammer className="text-white" /></div>
           </div>
           <div className="bg-white w-full h-25 rounded-lg p-4 shadow-[0_10px_25px_rgba(29,43,83,0.4)] flex justify-between items-start">
               <div>
                 <p className="text-gray-400">Total Clients</p>
-                <span className="text-2xl font-bold text-[#1D2B53]">3,892</span>
+                <span className="text-2xl font-bold text-[#1D2B53]">{totalClient}</span>
               </div>
               <div className="bg-[#1D2B53] text-center p-4 w-12 h-12 rounded-lg"><FaUsers className="text-white" /></div>
           </div>
@@ -46,7 +59,7 @@ function DashboardHome() {
           <div className="bg-white w-full h-25 rounded-lg p-4 shadow-[0_10px_25px_rgba(234,88,12,0.4)] flex justify-between items-start">
               <div>
                 <p className="text-gray-400">En Attente Validation</p>
-                <span className="text-2xl font-bold text-[#1D2B53]">23</span>
+                <span className="text-2xl font-bold text-[#1D2B53]">{totalValidy}</span>
               </div>
               <div className="bg-[#EA580C] text-center p-4 w-12 h-12 rounded-lg"><GiSandsOfTime className="text-white" /></div>
           </div>

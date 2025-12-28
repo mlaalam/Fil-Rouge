@@ -1,6 +1,11 @@
 import hero from '../assets/images/hero.jpg';
 import { IoSearch } from "react-icons/io5";
-function HeroSection() {
+function HeroSection({searchVille,searchCategory,setSearchVille,setSearchCategory}) {
+
+  const hendleSearch = () =>{
+    setSearchVille(searchVille);
+    setSearchCategory(searchCategory);
+  }
   return (
     <section className="relative w-full h-[60vh]">
   <img
@@ -16,17 +21,21 @@ function HeroSection() {
       </h1>
       <div className="flex flex-col md:flex-row items-stretch bg-white rounded-2xl md:rounded-full overflow-hidden shadow-lg p-2 gap-2 md:gap-0">
         <input
-          type="text"
+          type="text" 
+          value={searchVille}
+          onChange={(e) => setSearchVille(e.target.value)}
           placeholder="Sélectionnez votre zone"
           className="flex-1 px-5 py-4 outline-none text-sm rounded-xl md:rounded-none"
         />
         <div className="hidden md:block w-px h-12 bg-gray-300"></div>
         <input
           type="text"
+          value={searchCategory}
+          onChange={(e)=> setSearchCategory(e.target.value)}
           placeholder="Service"
           className="flex-1 px-5 py-4 outline-none text-sm rounded-xl md:rounded-none"
         />
-        <button className="bg-[#FA7B0C] hover:bg-orange-600 text-white px-8 py-4 rounded-xl md:rounded-full flex items-center justify-center">
+        <button onClick={hendleSearch} className="bg-[#FA7B0C] hover:bg-orange-600 text-white px-8 py-4 rounded-xl md:rounded-full flex items-center justify-center">
           <IoSearch size={20} />
         </button>
       </div>

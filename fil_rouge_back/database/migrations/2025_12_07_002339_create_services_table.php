@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('catigory_id')->references('id')->on('categories');
+            $table->foreignId('artisan_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

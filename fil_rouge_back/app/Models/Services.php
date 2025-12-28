@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Services extends Model
 {
     use HasFactory;
-    protected $fillable = ['title'];
+    protected $fillable = ['title','artisan_id'];
 
-    public function category(){
-      return $this->belongsTo(Category::class);
+    public function artisan(){
+      return $this->belongsTo(User::class);
     }
 }

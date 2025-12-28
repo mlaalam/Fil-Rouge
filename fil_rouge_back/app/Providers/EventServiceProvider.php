@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
+use App\Events\ApproveEvent;
 use App\Events\ForgetEvent;
+use App\Events\ProjectEvent;
 use App\Events\RegisterEvent;
+use App\Events\SuspendEvent;
+use App\Listeners\ApproveListener;
 use App\Listeners\ForgetPListener;
+use App\Listeners\ProjectListener;
 use App\Listeners\RegisterListener;
+use App\Listeners\SuspendListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,7 +29,10 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         RegisterEvent::class => [RegisterListener::class],
-        ForgetEvent::class => [ForgetPListener::class]
+        ForgetEvent::class => [ForgetPListener::class],
+        ApproveEvent::class => [ApproveListener::class],
+        SuspendEvent::class => [SuspendListener::class],
+        ProjectEvent::class => [ProjectListener::class],
     ];
 
     /**

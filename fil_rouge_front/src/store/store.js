@@ -1,12 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import registerReducer from '../slices/RegisterSlice'
-import loginReduser from '../slices/LoginSlice'
-import categoryReduser from '../slices/Category';
+import loginReducer from '../slices/LoginSlice'
+import categoryReducer from '../slices/Category';
+import artisanReducer from '../slices/artisanSlice';
+import projectReducer from '../slices/projectSlice';
+
 const store = configureStore({
   reducer:{
     register:registerReducer,
-    login:loginReduser,
-    categories:categoryReduser
+    login:loginReducer,
+    categories:categoryReducer,
+    artisans:artisanReducer,
+    projects:projectReducer,
   }
 })
 

@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Search from "../components/service_artisan/search";
 import CheckBox from "../components/service_artisan/CheckBox";
 import SectionArtisan from "../components/service_artisan/sectionArtisan";
 
 function ServicePape() {
+  const [villeInput , setVilleInput] = useState("");
+  const [categoryInput , setCategoryInput] = useState("");
+
+
   return (
     <div>
-      <Search />
-      {/* <main className='flex justify-start items-start w-[100%]'>
-        <CheckBox />
-        <SectionArtisan />
-      </main> */}
+      <Search villeInput={villeInput} setVilleInput={setVilleInput} categoryInput={categoryInput} setCategoryInput={setCategoryInput} />
+      
 
       <main className="max-w-[90%] mx-auto mt-10">
         <div className="flex flex-col lg:flex-row gap-8">
@@ -18,7 +19,7 @@ function ServicePape() {
             <CheckBox />
           </aside>
           <section className="w-full lg:w-[75%]">
-            <SectionArtisan />
+            <SectionArtisan villeInput={villeInput} categoryInput={categoryInput} />
           </section>
         </div>
       </main>

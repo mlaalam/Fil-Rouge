@@ -11,7 +11,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title'=>'required|min:3|string',
+            'description'=>'required|min:3|string',
+            'image' => 'required|image|mimes:jpg,jpeg,png',
         ];
+    }
+    public function message(){
+      return[
+        'title.required' => 'Le title est obligatoire.',
+        'description.required' => 'Le description est obligatoire.',
+        'image.required' => 'Le image est obligatoire.',
+      ];
     }
 }

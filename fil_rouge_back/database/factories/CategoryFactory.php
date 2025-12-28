@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,6 +30,7 @@ class CategoryFactory extends Factory
               'Femme de ménage',
               'Carreleur'
           ]),
+          'artisan_id'=>User::where('role','artisan')->inRandomOrder()->first()->id,
 
         ];
     }

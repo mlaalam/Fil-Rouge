@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','icon'];
+    protected $fillable = ['title','icon','artisan_id'];
 
     public function projects(){
-      return $this->hasMany(Project::class);
+      return $this->hasMany(Project::class ,'catigory_id');
     }
-    public function services(){
-      return $this->hasMany(Services::class);
+    public function artisan(){
+      return $this->belongsTo(User::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,15 @@ class ServicesFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->randomElement([
+              "Installation robinetterie",
+              "Tuyauterie",
+              "Réparation fuites",
+              "Installation chauffe-eau",
+              "Installation piscine",
+              "Débouchage",
+          ]),
+          'artisan_id'=>User::where('role','artisan')->inRandomOrder()->first()->id,
         ];
     }
 }

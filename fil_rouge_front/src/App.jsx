@@ -28,7 +28,8 @@ const role = getUserRole();
 const location = useLocation();
 const hideNav = location.pathname.startsWith('/admin');
 const hideFooter = location.pathname.startsWith('/users');
-// className='bg-gradient-to-br from-[#f9c999] to-white
+const [searchVille ,setSearchVille] = useState("");
+const [searchCategory ,setSearchCategory] = useState("");
   return (
     <div className='bg-gray-100'>
     
@@ -37,12 +38,12 @@ const hideFooter = location.pathname.startsWith('/users');
     
       <main>
         <Routes>
-          <Route path='/' element={<AccueilPage />} />
-          <Route path='/services' element={<ServicePape />} />
+          <Route path='/' element={<AccueilPage searchVille={searchVille} searchCategory={searchCategory} setSearchVille={setSearchVille} setSearchCategory={setSearchCategory} />} />
+          <Route path='/services' element={<ServicePape searchVille={searchVille} searchCategory={searchCategory} setSearchVille={setSearchVille} setSearchCategory={setSearchCategory} />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/forgot-password' element={<ForgetPassword />} />
-          <Route path='/profil' element={<Profil />} />
+          <Route path='/profil/:id' element={<Profil />} />
           <Route 
             path="/admin" 
             element={

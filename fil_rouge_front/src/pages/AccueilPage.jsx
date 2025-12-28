@@ -5,14 +5,16 @@ import ArtisanProfess from "../components/ArtisanProfess"
 import FindArtisanSteps from "../components/FindArtisanSteps"
 import Comments from "../components/Comments"
 import CreateCompte from "../components/CreateCompte"
+import { useState } from "react"
 
-function AccueilPage() {
+function AccueilPage({searchVille ,searchCategory,setSearchVille,setSearchCategory}) {
+  
   return (
     <div className="">
-      <HeroSection />
+      <HeroSection searchVille={searchVille} searchCategory={searchCategory} setSearchVille={setSearchVille} setSearchCategory={setSearchCategory} />
       <Services />
       <TopArtusan />
-      <ArtisanProfess />
+      <ArtisanProfess searchVille={searchVille} searchCategory={searchCategory} />
       <FindArtisanSteps />
       <Comments />
       <CreateCompte />

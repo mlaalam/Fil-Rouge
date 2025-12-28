@@ -1,22 +1,25 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import logo from "../assets/images/logo.jpg";
-import { getUserRole, isAuthenticate } from "../services/auth";
-
-
+import { getUserId, getUserName, getUserRole, isAuthenticate } from "../services/auth";
+import { CiLogout } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
+import { useDispatch} from "react-redux";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const role = getUserRole();
+  const user = getUserName();
+  const user_id = getUserId();
   const isAuth = isAuthenticate();
   const hendleLogout = () =>{
     localStorage.removeItem('auth_token');
     localStorage.removeItem('role');
+    localStorage.removeItem('user');
     navigate('/')
-    
   }
-
-
+  const dispatch = useDispatch();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
   return (
@@ -39,9 +42,6 @@ const Navbar = () => {
             <Link to="/services" className="text-gray-700 hover:text-[#FA7B0C]">
               Services
             </Link>
-            {/* <Link to="/dashboard" className="text-gray-700 hover:text-indigo-600">
-              Admin Panel
-            </Link> */}
             {!isAuth
               ? (
                 <>
@@ -61,18 +61,44 @@ const Navbar = () => {
           
               ):(
                 <>
-                  {role==='artisan' ? 
+                  {role ==='artisan' ? 
                     <Link to="users/dashbord" className="text-gray-700 hover:text-[#FA7B0C]">
                       Dashbord
                     </Link>   :
                     ''
-                }
-                  <button
-                    onClick={hendleLogout}
-                    className="px-4 py-2 bg-red-400 text-white rounded-lg"
-                  >
-                    Déconnexion
-                  </button>
+                  }
+                
+                  <div className="relative inline-block text-left z-50 overflow-visible">
+                    <button
+                      onClick={() => setOpen(!open)}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg"
+                    >
+                      <span className="font-semibold text-gray-700 "> {user}</span>
+                      <svg
+                        className={`w-4 h-4 transition-transform ${
+                          open ? "rotate-180" : ""
+                        }`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                    {open && (
+                      <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
+                        <button onClick={() => navigate(`/profil/${user_id}`)} className="block w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2">
+                          <CgProfile /> Profile
+                        </button>
+                        <button
+                          onClick={hendleLogout}
+                          className="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-50 flex justify-start gap-2 items-center"
+                        >
+                          <CiLogout /> Déconnexion
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </>
               )
                 
@@ -89,7 +115,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t">
           <nav className="flex flex-col px-4 py-4 space-y-3">
@@ -99,24 +125,48 @@ const Navbar = () => {
             <Link to="/services" onClick={closeMenu} className="text-gray-700">
               Services
             </Link>
-            {/* <Link to="/dashboard" onClick={closeMenu} className="text-gray-700">
-              Admin Panel
-            </Link> */}
-
-            <Link
-              to="/login"
-              onClick={closeMenu}
-              className="text-[#FA7B0C]"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              onClick={closeMenu}
-              className="bg-[#FA7B0C] text-white text-center py-2 rounded-lg"
-            >
-              Register
-            </Link>
+            {!isAuth ? (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={closeMenu}
+                    className="text-[#FA7B0C]"
+                  >
+                    Connexion
+                  </Link>
+                  <Link
+                    to="/register"
+                    onClick={closeMenu}
+                    className="bg-[#FA7B0C] text-white text-center py-2 rounded-lg"
+                  >
+                    Inscrivez-vous
+                  </Link></>
+              ):(
+                <>
+                  {role==='artisan' ? 
+                    <>
+                      <Link to="users/dashbord" className="text-gray-700 hover:text-[#FA7B0C]">
+                        Dashbord
+                      </Link> 
+                      <button onClick={() => navigate(`/profil/${user_id}`)} className="text-gray-700 hover:text-[#FA7B0C]">
+                        Profil
+                      </button> 
+                      
+                      </> :
+                      ''
+                    
+                    
+                }
+                  <button
+                    onClick={hendleLogout}
+                    className="px-4 py-2 bg-red-400 text-white rounded-lg flex justify-start gap-2 items-center"
+                  >
+                    <CiLogout /> Déconnexion
+                  </button>
+                </>
+              )
+            }
+              
           </nav>
         </div>
       )}

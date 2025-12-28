@@ -9,15 +9,15 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','description','image','artisan_id','category_id'];
+    protected $fillable = ['title','description','image','artisan_id','catigory_id'];
 
-    public function user(){
-      return $this->belongsTo(User::class);
+    public function artisan(){
+      return $this->belongsTo(User::class );
     }
     public function commentaires(){
-      return $this->hasMany(Commentaire::class);
+      return $this->hasMany(Commentaire::class ,'project_id');
     }
     public function category(){
-      return $this->belongsTo(Category::class);
+      return $this->belongsTo(Category::class, 'catigory_id');
     }
 }
