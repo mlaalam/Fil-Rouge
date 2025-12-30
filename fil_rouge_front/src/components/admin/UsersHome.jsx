@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getArtisan } from '../../slices/artisanSlice';
+import { approveProfil, deleteProfile, getArtisan, suspendProfil } from '../../slices/artisanSlice';
+import EditProfil from '../users/EditProfil';
 
 function UsersHome() {
 const [currentPage , setCurrentPage] = useState(1);
-const [rowPerPage, setRowPerPage] =useState(5);
+const [rowPerPage, setRowPerPage] =useState(10);
+const [selectProfile ,setSelectProfile] = useState(null);
+const [showForm , setShowForm] = useState(false);
 
 
 
   const dispatch = useDispatch();
-  const { data:artisans,loading,error} = useSelector((state)=> state.artisans)
+  const { data:artisans,loading,successMessage} = useSelector((state)=> state.artisans)
   useEffect(()=>{
       dispatch(getArtisan());
   },[dispatch]);
@@ -19,15 +22,20 @@ const [rowPerPage, setRowPerPage] =useState(5);
   const getStatusColor = (status) => {
     switch (status) {
       case "En attente":
-        return "text-yellow-800 border-yellow-200";'pending';
+        return "text-yellow-800 border-yellow-200";
       case "Actif":
         return "text-green-800 border-green-200";
-      case "Suspendu":
+      case "Suspend":
         return "text-red-800 border-red-200";
       default:
         return "text-gray-800 border-gray-200";
     }
   };
+  useEffect(() => {
+  if (successMessage) {
+    alert(successMessage); 
+  }
+}, [successMessage]);
   const getRoleColor = (role) =>{
       switch (role) {
       case "artisan":
@@ -43,9 +51,9 @@ const [rowPerPage, setRowPerPage] =useState(5);
         <h1 className="text-2xl font-bold text-[#1D2B53] ">Table Utilisateur</h1>
       </div>
       <div className="w-[90%] mx-auto">
-      <button className="bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-600 cursor-pointer mb-6">
+      {/* <button className="bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-600 cursor-pointer mb-6">
         Ajouter utilisateur
-      </button>
+      </button> */}
       <div className="flex justify-end items-center mb-4">
         <span className="text-gray-600">
           <select
@@ -90,11 +98,17 @@ const [rowPerPage, setRowPerPage] =useState(5);
               <td className="text-center text-xl py-4">{new Date(item.created_at).toLocaleString('sv-SE')}</td>
               <td className={`text-center text-xl py-4 ${getStatusColor(item.status)}`}>{item.status}</td>
               <td className="py-4 flex gap-7 justify-center">
-                <button className="bg-blue-400 text-xl rounded-xl px-3 py-1 text-white">
-                  modifier
+                <button onClick={()=>{setSelectProfile(item); setShowForm(true) } } className="bg-blue-400 text-xl rounded-xl px-3 py-1 text-white">
+                  Edit
                 </button>
-                <button className="bg-red-400 text-xl rounded-xl px-3 py-1 text-white">
-                  supprimer
+                <button onClick={()=>dispatch(deleteProfile(item.id))} className="bg-red-400 text-xl rounded-xl px-3 py-1 text-white">
+                    Delete
+                </button>
+                <button onClick={()=>dispatch(approveProfil(item.id))} className="bg-green-400 text-xl rounded-xl px-3 py-1 text-white">
+                    Active
+                </button>
+                <button onClick={()=>dispatch(suspendProfil(item.id))} className="bg-red-500 text-xl rounded-xl px-3 py-1 text-white">
+                    Suspend
                 </button>
               </td>
             </tr>
@@ -102,6 +116,7 @@ const [rowPerPage, setRowPerPage] =useState(5);
         </tbody>
       </table>
     </div>
+      {showForm ? <EditProfil showForm={showForm} setShowForm={setShowForm} profile={selectProfile} /> : ''}
     </div>
   );
 };

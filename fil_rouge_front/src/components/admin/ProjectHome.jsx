@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { getProject } from "../../slices/projectSlice";
-
+import { getProject, supprProject } from "../../slices/projectSlice";
+import { LoadingIndicator } from "../application/loading-indicator/loading-indicator";
 
 function ProjectHome() {
 const dispatch = useDispatch();
 const {data:projects, loading,error} = useSelector((state)=>state.projects);
 const [currentPage , setCurrentPage] = useState(1);
-const [rowsPrePage , setRowsPerPage] = useState(5);
+const [rowsPrePage , setRowsPerPage] = useState(10);
 
 useEffect(()=>{
   dispatch(getProject());
@@ -16,17 +16,17 @@ useEffect(()=>{
 const indexOfLastRow = currentPage * rowsPrePage;
 const indexOfFirstRow = indexOfLastRow - rowsPrePage;
 const currentProject = projects.slice(indexOfFirstRow , indexOfLastRow);
-  if (loading) {
+ if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600 text-lg">Loading...</p>
+      <div className="flex justify-center py-20">
+        <LoadingIndicator type="dot-circle" size="md" />
       </div>
     );
   }
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-red-500 text-lg">Artisans not found</p>
+      <div className="flex justify-center py-20 text-red-500 text-lg">
+        Error loading projects
       </div>
     );
   }
@@ -35,6 +35,7 @@ const currentProject = projects.slice(indexOfFirstRow , indexOfLastRow);
       <div className='flex justify-between items-center mb-5'>
         <h1 className="text-2xl font-bold text-[#1D2B53] ">Les projets artisans</h1>
       </div>
+        
       <div className="flex justify-end items-center mb-4">
         <span className="text-gray-600">
           <select
@@ -79,12 +80,12 @@ const currentProject = projects.slice(indexOfFirstRow , indexOfLastRow);
               <td className="text-center text-xl py-4">{item.artisan?.nom_complet}</td>
               <td className="text-center text-xl py-4">{item.category?.title}</td>
               <td className="text-center text-xl py-4">{new Date(item.created_at).toLocaleString('sv-SE')}</td>
-              <td className="text-center text-xl py-4">{new Date(item.date_fin).toLocaleString('sv-SE')}</td>
+              <td className="text-center text-xl py-4">  {item.date_fin ? 'Terminé' : 'En cours' }</td>
               <td className="py-4 flex gap-7 justify-center">
-                <button className="bg-blue-400 text-xl rounded-xl px-3 py-1 text-white">
+                {/* <button className="bg-blue-400 text-xl rounded-xl px-3 py-1 text-white">
                   modifier
-                </button>
-                <button className="bg-red-400 text-xl rounded-xl px-3 py-1 text-white">
+                </button> */}
+                <button onClick={()=>dispatch(supprProject(item.id))} className="bg-red-400 text-xl rounded-xl px-3 py-1 text-white">
                   supprimer
                 </button>
               </td>

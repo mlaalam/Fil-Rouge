@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import artis from "../../assets/images/elictric.PNG";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaPhoneSquareAlt } from "react-icons/fa";
@@ -8,6 +8,9 @@ import { LuClock3 } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { showArtisan } from "../../slices/artisanSlice";
 import { useParams } from "react-router-dom";
+import { getMyProject } from "../../slices/projectSlice";
+import { getUserId } from "../../services/auth";
+import EditProfil from "./EditProfil";
 const StatBox = ({ title, value, green }) => (
   <div className="bg-white rounded-xl p-4 text-center shadow-sm">
     <p className="text-sm text-gray-500">{title}</p>
@@ -18,11 +21,18 @@ const StatBox = ({ title, value, green }) => (
 );
 
 export default function ProfilArtisan() {
+  const [selectProfil ,setSelectProfil] = useState(null)
+  const [showForm , setShowForm] = useState(false);
   const dispatch = useDispatch();
+    const {data:projects} = useSelector((state)=>state.projects);
+    useEffect(()=>{
+      dispatch(getMyProject());
+    },[dispatch])
+    const userId = Number(getUserId());
+    const totalProjectCom = projects.filter((pro) => pro.artisan_id === userId && pro.status === 1).length;
   const {
-    data: artisan,
+    profil: artisan,
     loading,
-    error,
   } = useSelector((state) => state.artisans);
   const {id} = useParams()
   useEffect(() => {
@@ -48,18 +58,25 @@ export default function ProfilArtisan() {
     <div className=" min-h-screen py-10 px-4">
       
       <div className="max-w-6xl mx-auto space-y-8">
+        {userId === artisan?.id && (
+          <button onClick={()=>{setShowForm(!showForm); setSelectProfil(artisan)}} className="bg-blue-400 text-white p-3 font-bold cursor-pointer rounded-lg hover:bg-blue-500 transition">
+              Modifier profil
+          </button>
+      )}
         <div className="bg-[#F3EADF] rounded-2xl p-6 flex flex-col md:flex-row gap-6">
+          
           <div className="w-full md:w-1/3 flex flex-col">
             <img
               src={artisan.image}
               alt="artisan"
-              className="rounded-xl w-full h-64 object-cover"
+              className="rounded-full mx-auto w-64 h-64 object-cover"
             />
 
-            <button className="mt-4 w-full border-2 border-orange-500 text-orange-500 font-semibold py-2 rounded-full hover:bg-orange-500 hover:text-white transition flex justify-center items-center gap-2">
+            <button className="mt-4 w-full border-2 border-green-500 text-green-500 font-semibold py-2 rounded-full hover:bg-green-500 hover:text-white transition flex justify-center items-center gap-2">
               <FaWhatsapp /> WhatsApp
             </button>
           </div>
+          
 
           <div className="flex-1 space-y-3">
             <h2 className="text-2xl font-bold text-[#1D2B53]">
@@ -79,12 +96,12 @@ export default function ProfilArtisan() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
               <StatBox title="Expérience" value="15+ ans" />
-              <StatBox title="Projets" value="120 complétés" />
+              <StatBox title="Projets" value={`${userId === artisan?.id ? totalProjectCom : 'No'} complétés` }/>
               <StatBox title="Réponse" value="< 2 heures" green />
             </div>
           </div>
         </div>
-
+        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl p-6 shadow-sm md:col-span-2">
             <h3 className="font-bold mb-2">À propos</h3>
@@ -104,7 +121,7 @@ export default function ProfilArtisan() {
               <LuClock3 className="w-4 h-4" /> Ponctuel
             </p>
           </div>
-
+          
           <div className="bg-white rounded-xl p-6 shadow-sm md:col-span-2">
             <h3 className="font-bold mb-4">Services proposés</h3>
 
@@ -164,6 +181,7 @@ export default function ProfilArtisan() {
           </div>
         </div>
       </div>
+      {showForm ? <EditProfil showForm={showForm} setShowForm={setShowForm} profile={selectProfil} /> : ''}
     </div>
   );
 }

@@ -16,17 +16,25 @@ export const storeProject = async (title,description,image,category) => {
   formData.append("category", category);
   formData.append("image", image);
   const res = await api.post("/projects",formData);
-  return res.data.projects;
+  return res.data.project;
 };
-export const updateProject = async (id , data) => {
-  const res = await api.put(`/projects/${id}`,{data});
-  return res.data;
+export const updateProject = async (id, title, description, image, category) => {
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("category", category);
+  if (image) {
+    formData.append("image", image);
+  }
+
+  const res = await api.post(`/projects/${id}?_method=PUT`, formData);
+  return res.data.project; 
 };
 export const deleteProject = async (id) => {
   const res = await api.delete(`/projects/${id}`);
-  return res.data;
+  return id;
 };
-export const doneProject = async (id) => {
+export const finProject = async (id) => {
   const res = await api.put(`/projects/${id}/done`);
-  return res.data;
+  return res.data.project;
 };

@@ -6,10 +6,17 @@ import { FaPlus } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa";
 import { MdBlock } from "react-icons/md";
 import TableBord from "./TableBord";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getProject } from "../../slices/projectSlice";
 function DashboardHome() {
-
+  const dispatch = useDispatch();
   const {data:artisans} = useSelector((state)=>state.artisans);
+  const {data:projects} = useSelector((state)=>state.projects);
+  useEffect(()=>{
+    dispatch(getProject());
+  },[dispatch])
+    const totalProject = projects.length;
     const totalArtisan = artisans.filter(
     user => user.role === 'artisan'
   ).length;
@@ -17,7 +24,7 @@ function DashboardHome() {
     user => user.role === 'client'
   ).length;
     const totalValidy = artisans.filter(
-    user => user.status === 'pending'
+    user => user.status === 'En attente'
   ).length;
 
   return (
@@ -52,7 +59,7 @@ function DashboardHome() {
           <div className="bg-white w-full h-25 rounded-lg p-4 shadow-[0_10px_25px_rgba(147,51,234,0.4)] flex justify-between items-start">
               <div>
                 <p className="text-gray-400">Projets Publiés</p>
-                <span className="text-2xl font-bold text-[#1D2B53]">542</span>
+                <span className="text-2xl font-bold text-[#1D2B53]">{totalProject}</span>
               </div>
               <div className="bg-[#9333EA] text-center p-4 w-12 h-12 rounded-lg"><FaBriefcase className="text-white" /></div>
           </div>

@@ -22,9 +22,10 @@ class UpdateArtisanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'sometimes|image|mimes:jpg,jpeg,png|max:2048',
+            'image' => 'sometimes|image|mimes:jpg,jpeg,png',
             'nom_complet' => 'sometimes|string|max:255',
             'ville' => 'sometimes|string|max:255',
+            'numero' => 'sometimes', 'regex:/^(\+212|0)[5-7][0-9]{8}$/',
             'secteur' => 'sometimes|string|max:255',
             'propos' => 'sometimes|string',
             'role' => 'sometimes|in:client,artisan',

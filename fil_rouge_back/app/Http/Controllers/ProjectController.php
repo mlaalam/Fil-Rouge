@@ -90,7 +90,7 @@ class ProjectController extends Controller
           return response()->json(['error' => 'project not found'], 404);
           }
           Gate::authorize('update',$project);
-          if($request->hasFile('file')){
+          if($request->hasFile('image')){
             $updateImage = Cloudinary::upload(
               $request->file('image')->getRealPath()
             );
@@ -101,7 +101,7 @@ class ProjectController extends Controller
           $project->description = $request->description ?? $project->description;
           $project->catigory_id = $request->category ?? $project->catigory_id;
           $project->save();
-          return response()->json(['success'=>true , 'Project updated successfully.','project'=>$project]);
+          return response()->json(['success'=>true , 'message' => 'Project updated successfully.','project' => $project->load('category')]);
         }catch(\Exception $e){
           return response()->json(['success'=>false , 'message' => 'Error while updating the project.' . $e->getMessage()],500);
         }
@@ -138,7 +138,7 @@ class ProjectController extends Controller
                 ], 401);
                 }
           Gate::authorize('done', $project);
-          $project->status = 1 ?? $project->status;
+          $project->status = 1;
           $project->date_fin = now();
           // ProjectEvent::dispatch($user ,$project);
           $project->save();

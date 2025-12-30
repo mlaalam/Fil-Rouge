@@ -6,7 +6,7 @@ import { BsStack } from "react-icons/bs";
 import { FaBriefcase } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import { getUserName} from "../services/auth";
-function Dashbord({ userName = 'Mouad Laalam' }) {
+function Dashbord() {
   const navigate = useNavigate();
 
   const logout = () => {

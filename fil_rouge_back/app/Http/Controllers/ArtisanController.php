@@ -65,8 +65,9 @@ class ArtisanController extends Controller
         $artisan->ville = $request->ville ?? $artisan->ville;
         $artisan->secteur = $request->secteur ?? $artisan->secteur;
         $artisan->propos = $request->propos ?? $artisan->propos;
+        $artisan->numero = $request->numero ?? $artisan->numero;
         $artisan->role = $request->role ?? $artisan->role;
-        $artisan->password = $request->propos ?? $artisan->password;
+        $artisan->password = $request->password ?? $artisan->password;
         $artisan->jours_de_travail = $request->jours_de_travail ?? $artisan->jours_de_travail;
         $artisan->heures_par_jour = $request->heures_par_jour ?? $artisan->heures_par_jour;
 
@@ -109,7 +110,7 @@ class ArtisanController extends Controller
           $artisan->status = 'Actif';
           // ApproveEvent::dispatch($artisan);
           $artisan->save();
-          return response()->json(['success'=>true,'message'=>'Artisan approved successfully.' ,'artisan'=>$artisan->nom_complet],200);
+          return response()->json(['success'=>true,'message'=>'Artisan approved successfully.' ,'artisan'=>$artisan],200);
         }else{
             return response()->json(['success'=>true,'message'=>'Artisan is already approved.'],401);
         }
@@ -129,7 +130,7 @@ class ArtisanController extends Controller
           $artisan->status = 'Suspend';
           // SuspendEvent::dispatch($artisan);
           $artisan->save();
-          return response()->json(['success'=>true,'message'=>'Artisan Suspended successfully.' ,'artisan'=>$artisan->nom_complet],200);
+          return response()->json(['success'=>true,'message'=>'Artisan Suspended successfully.' ,'artisan'=>$artisan],200);
         }else{
             return response()->json(['success'=>true,'message'=>'Artisan is already suspended.'],401);
         }

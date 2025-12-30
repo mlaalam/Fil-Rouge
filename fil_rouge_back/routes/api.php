@@ -45,9 +45,9 @@ Route::controller(CategoryController::class)->group(function(){
 Route::controller(ArtisanController::class)->group(function(){
     Route::get('/artisans','index');
     Route::get('/artisans/{id}','show');
-    Route::put('/artisans/{id}','update')->middleware('auth:sanctum');
+    Route::patch('/artisans/{id}','update')->middleware('auth:sanctum');
     Route::delete('/artisans/{id}','destroy')->middleware('auth:sanctum');
-    Route::put('/artisans/{id}','approve')->middleware('auth:sanctum');
+    Route::put('/artisans/{id}/approve','approve')->middleware('auth:sanctum');
     Route::put('/artisans/{id}/suspend','suspend')->middleware('auth:sanctum');
 });
 Route::controller(ProjectController::class)->group(function(){

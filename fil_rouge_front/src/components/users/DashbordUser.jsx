@@ -3,12 +3,15 @@ import { MdDoneOutline } from "react-icons/md";
 import { GiSandsOfTime } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getMyProject } from "../../slices/projectSlice";
+import { doneProject, getMyProject, supprProject } from "../../slices/projectSlice";
 import { getUserId } from "../../services/auth";
+import { LoadingIndicator } from "../application/loading-indicator/loading-indicator";
 import AddProject from "./AddProject";
 function DashbordUser() {
   const dispatch = useDispatch();
   const [showForm, setShowForm] = useState(false);
+  const [selectProject ,setSelectProject] = useState(null);
+  
   const {
     data: projects,
     loading,
@@ -31,27 +34,13 @@ function DashbordUser() {
     (pro) => pro.artisan_id === userId && pro.status === 0
   ).length;
 
-  // =================================
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-600 text-lg">Loading...</p>
-      </div>
-    );
-  }
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-red-500 text-lg">Artisans not found</p>
-      </div>
-    );
-  }
   return (
-    <div className="mx-25 mt-10 min-h-screen">
+    <div className="px-4 sm:px-6 lg:px-10 mt-10 min-h-screen">
+      
       <div className="mb-5">
         <h1 className="text-2xl font-bold text-[#1D2B53]">Mon projets</h1>
       </div>
-      <div className="w-[70%] flex mx-auto gap-10 grid grid-cols-3 mb-12">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <div className="w-[100%]">
           <div className="bg-white h-28 rounded-lg p-4 shadow-[0_10px_25px_rgba(0,123,131,0.4)] flex justify-between items-center">
             <div>
@@ -93,22 +82,22 @@ function DashbordUser() {
         </div>
       </div>
 
-      <div className="w-[90%] mx-auto mt-6 flex flex-col md:flex-row md:items-start md:gap-8">
-        <div className="flex flex-col md:w-1/3 mb-6 md:mb-0">
+      <div className="max-w-6xl mx-auto mt-6 flex flex-col">
+        <div className="">
           <button
-            onClick={() => setShowForm(!showForm)}
+            onClick={() =>{ setShowForm(!showForm); setSelectProject(null)}}
             className="bg-blue-500 p-3 rounded-lg text-white hover:bg-blue-600 transition mb-4"
           >
             Ajouter projet
           </button>
-          {showForm && (
-            <div className=" shadow-lg rounded-lg p-6">
-              <AddProject showForm={showForm} setShowForm={setShowForm} />
-            </div>
-          )}
         </div>
-        <div className="md:w-2/3 overflow-x-auto">
-          <table className="w-full border border-gray-200 rounded-lg">
+        <div className="w-full overflow-x-auto">
+            {/* {loading && (
+              <div className="flex justify-center py-10">
+                <LoadingIndicator type="dot-circle" size="md" />
+              </div>
+            )} */}
+          <table className="min-w-[700px] w-full border border-gray-200 rounded-lg">
             <thead className="bg-gray-50">
               <tr>
                 <th className="py-3 text-center text-lg font-semibold text-gray-700">
@@ -142,16 +131,16 @@ function DashbordUser() {
                     {new Date(item.created_at).toLocaleString("sv-SE")}
                   </td>
                   <td className="text-center py-3">
-                    {item.date_fin ? new Date(item.date_fin).toLocaleString("sv-SE") : '-' }
+                    {item.date_fin ? 'Terminé' : 'En cours' }
                   </td>
                   <td className="flex flex-col md:flex-row gap-2 justify-center py-3">
-                    <button className="bg-blue-400 text-white px-3 py-1 rounded-lg hover:bg-blue-500 transition">
+                    <button onClick={()=>{setSelectProject(item.id); setShowForm(!showForm)}} className="bg-blue-400 text-white px-3 py-1 rounded-lg hover:bg-blue-500 transition">
                       Modifier
                     </button>
-                    <button className="bg-green-400 text-white px-3 py-1 rounded-lg hover:bg-green-500 transition">
+                    <button onClick={()=>dispatch(doneProject(item.id))} className="bg-green-400 text-white px-3 py-1 rounded-lg hover:bg-green-500 transition">
                       Terminé
                     </button>
-                    <button className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 transition">
+                    <button onClick={()=>dispatch(supprProject(item.id))} className="bg-red-400 text-white px-3 py-1 rounded-lg hover:bg-red-500 transition">
                       Supprimer
                     </button>
                   </td>
@@ -160,6 +149,12 @@ function DashbordUser() {
             </tbody>
           </table>
         </div>
+          {showForm && (
+            <div className=" shadow-lg rounded-lg p-6">
+              <AddProject showForm={showForm} setShowForm={setShowForm} project={selectProject} />
+            
+            </div>
+          )}
       </div>
     </div>
   );

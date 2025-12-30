@@ -36,9 +36,9 @@ function ServicesHome() {
       </div>
       <div className="flex justify-between gap-4">
         <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm w-[50%]">
-          <button className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
+          {/* <button className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
             Ajouter Catigory
-          </button>
+          </button> */}
           <table className="w-full border-2 border-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -77,9 +77,9 @@ function ServicesHome() {
           </table>
         </div>
         <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm w-[50%]">
-          <button className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
+          {/* <button className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
             Ajouter Services
-          </button>
+          </button> */}
           <table className="w-full border-2 border-gray-200">
             <thead className="bg-gray-50">
               <tr>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "../../slices/Category";
-import { saveProject } from "../../slices/projectSlice";
+import { editProject, getMyProject, saveProject } from "../../slices/projectSlice";
 
 
 
-function AddProject({showForm , setShowForm}) {
+function AddProject({showForm , setShowForm ,project}) {
   const {data:categories} = useSelector((state)=>state.categories);
-  const {loading ,fieldErrors } = useSelector((state)=>state.projects);
+  const {loadingSave ,fieldErrors } = useSelector((state)=>state.projects);
   const [title , setTitle] = useState('');
   const [description , setDescription] = useState('');
   const [image , setImage] = useState(null);
@@ -17,14 +17,32 @@ function AddProject({showForm , setShowForm}) {
   useEffect(()=>{
     dispatch(getCategory());
   },[dispatch]);
-  const hendelSubmit = async (e) =>{
-    e.preventDefault();
-    dispatch(saveProject({title,description,image,category}));
-    window.location.reload();
-  }
+    const hendelSubmit = async (e) => {
+      e.preventDefault();
+      let result;
+      if(project){
+        result = await dispatch(
+                editProject({id:project.id, title, description, image, category })
+              );
+      }else{
+        result = await dispatch(
+        saveProject({ title, description, image, category })
+      );
+      }
+      if (saveProject.fulfilled.match(result) || editProject.fulfilled.match(result)) {
+        setShowForm(false); 
+      }
+    };
+  useEffect(()=>{
+    if(project){
+      setTitle(project.title);
+      setDescription(project.description);
+      setCategory(project.catigory_id);
+    }
+  },[project]);
   return (
     <div>
-      <div className="mt-10 flex items-center justify-center bg-gray-100 px-4">
+      <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
         <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
             Add New Project
@@ -82,10 +100,10 @@ function AddProject({showForm , setShowForm}) {
             </div>
             <button
               type="submit"
-              disabled={loading}
+              disabled={loadingSave}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition duration-300"
             >
-              {loading ? 'Création...' : 'Submit Project'}
+              {loadingSave ? 'saving ...' : project ? 'modifier' : 'Submit Project'}
             </button>
             <button
               onClick={()=>setShowForm(!showForm)}
