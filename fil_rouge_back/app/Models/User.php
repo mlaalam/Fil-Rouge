@@ -65,4 +65,11 @@ class User extends Authenticatable
       return $this->hasMany(Services::class ,'artisan_id');
     }
 
+    public function artisanRatin(){
+      return $this->hasMany(Rating::class , 'artisan_id');
+    }
+    public function clientRatin(){
+      return $this->hasMany(Rating::class , 'artisan_id');
+    }
+
 }

@@ -39,7 +39,7 @@ class CategoryController extends Controller
           'icon' => $iconUrl,
           'artisan_id' => $user->id
         ]);
-        return response()->json(['message'=>'category is create seccussfuly' ,'categories'=>$categ]);
+        return response()->json(['message'=>'category is create seccussfuly' ,'categorie'=>$categ]);
       }catch(\Exception $e){
         return response()->json([
           "success"=>false,

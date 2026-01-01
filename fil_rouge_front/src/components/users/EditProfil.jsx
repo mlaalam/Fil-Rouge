@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { getCategory } from "../../slices/Category";
 import { editProfile, getArtisan } from "../../slices/artisanSlice";
+import { getUserRole } from "../../services/auth";
 
 
 function EditProfil({showForm , setShowForm , profile}) {
@@ -56,7 +57,7 @@ useEffect(() => {
     setShowForm(false); 
     }
   }
-  
+  const roleUser = getUserRole();
   return (
     <div>
       <div onClick={()=>setShowForm(!showForm)} className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -99,7 +100,8 @@ useEffect(() => {
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
           /> 
           {fieldErrors.password && <p className="text-red-500">{fieldErrors.password}</p>}
-          <div className="grid grid-cols-2 gap-3">
+          {roleUser === 'artisan' ? (
+            <div className="grid grid-cols-2 gap-3">
             <select value={secteur} onChange={(e)=>setSecteur(e.target.value)}  className="w-full px-4 py-2 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-orange-500">
                 <option value="">Select Secteur</option>
                   {categories.map((cat) => (
@@ -112,6 +114,10 @@ useEffect(() => {
                     <option value="artisan">Artisan</option>
             </select>
           </div>
+          ): ''
+          
+        }
+          
           <input
             type="text"
             placeholder="+ 212 XXXXXXXX"
@@ -127,6 +133,8 @@ useEffect(() => {
             onChange={(e)=>setPropos(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
           />
+          {roleUser === 'artisan'?
+          (
           <div className="grid grid-cols-2 gap-3">
             <input
               type="number"
@@ -142,7 +150,10 @@ useEffect(() => {
               onChange={(e)=>setHeures_par_jour(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
             />
-          </div>
+          </div>  
+          ): ''
+        }
+          
           <div className="flex justify-end gap-3 pt-4">
             <button onClick={()=>setShowForm(!showForm)}
               type="button"

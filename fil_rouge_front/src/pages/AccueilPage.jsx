@@ -1,11 +1,10 @@
 import HeroSection from "../components/HeroSection"
 import Services from "../components/Services"
-import TopArtusan from "../components/TopArtusan"
 import ArtisanProfess from "../components/ArtisanProfess"
 import FindArtisanSteps from "../components/FindArtisanSteps"
 import Comments from "../components/Comments"
 import CreateCompte from "../components/CreateCompte"
-import { useState } from "react"
+import ProjectsArtisan from "../components/ProjectsArtisan"
 
 function AccueilPage({searchVille ,searchCategory,setSearchVille,setSearchCategory}) {
   
@@ -13,8 +12,8 @@ function AccueilPage({searchVille ,searchCategory,setSearchVille,setSearchCatego
     <div className="">
       <HeroSection searchVille={searchVille} searchCategory={searchCategory} setSearchVille={setSearchVille} setSearchCategory={setSearchCategory} />
       <Services />
-      <TopArtusan />
       <ArtisanProfess searchVille={searchVille} searchCategory={searchCategory} />
+      <ProjectsArtisan />
       <FindArtisanSteps />
       <Comments />
       <CreateCompte />

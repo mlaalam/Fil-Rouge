@@ -20,7 +20,6 @@ class AuthenticationController extends Controller
               'email'=>$request->email,
               'numero'=>$request->numero,
               'role'=>$request->role,
-              'image' => 'images/profileart.jpg',
               'password'=>$request->password,
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;

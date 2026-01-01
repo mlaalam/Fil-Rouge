@@ -32,10 +32,7 @@ const [searchVille ,setSearchVille] = useState("");
 const [searchCategory ,setSearchCategory] = useState("");
   return (
     <div className='bg-gray-100'>
-    
-        {!hideNav && <Navbar />}
-
-    
+      {!hideNav && <Navbar />}
       <main>
         <Routes>
           <Route path='/' element={<AccueilPage searchVille={searchVille} searchCategory={searchCategory} setSearchVille={setSearchVille} setSearchCategory={setSearchCategory} />} />

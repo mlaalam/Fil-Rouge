@@ -23,7 +23,7 @@ class AuthenticationRequest extends FormRequest
     {
         return [
           'nom_complet' => 'required|min:3|string',
-          'numero' => 'required|regex:/^(\+212|0)[5-7][0-9]{8}$/',
+          'numero' => 'required|min:9|numeric',
           'role' => 'required|in:client,artisan',
           'email' => 'required|email|unique:users,email',
           'password' => 'required|min:6|confirmed',
@@ -33,7 +33,6 @@ class AuthenticationRequest extends FormRequest
       return [
         'nom_complet.required' => 'Le nom est obligatoire.',
         'email.required' => 'L’email est obligatoire.',
-        'numero.regex' => 'Le numéro de téléphone est invalide.',
         'numero.required' => 'Le numero est obligatoire.',
         'numero.numeric' => 'Le numéro doit contenir uniquement des chiffres.',
         'email.unique' => 'Cet email existe déjà.',

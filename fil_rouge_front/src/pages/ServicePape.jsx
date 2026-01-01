@@ -13,15 +13,15 @@ function ServicePape() {
       <Search villeInput={villeInput} setVilleInput={setVilleInput} categoryInput={categoryInput} setCategoryInput={setCategoryInput} />
       
 
-      <main className="max-w-[90%] mx-auto mt-10">
-        <div className="flex flex-col lg:flex-row gap-8">
-          <aside className="w-full lg:w-[25%] bg-white rounded-xl shadow-md p-6 h-fit mt-15 mb-16">
+      <main className="max-w-[80%] mx-auto mt-10">
+        {/* <div className="flex flex-col lg:flex-row gap-8"> */}
+          {/* <aside className="w-full lg:w-[25%] bg-white rounded-xl shadow-md p-6 h-fit mt-15 mb-16">
             <CheckBox />
-          </aside>
-          <section className="w-full lg:w-[75%]">
+          </aside> */}
+          {/* <section className="w-full lg:w-[75%]"> */}
             <SectionArtisan villeInput={villeInput} categoryInput={categoryInput} />
-          </section>
-        </div>
+          {/* </section> */}
+        {/* </div> */}
       </main>
     </div>
   );

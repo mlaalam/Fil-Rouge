@@ -29,7 +29,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'artisan';
+        return $user->role === 'admin';
     }
 
     /**

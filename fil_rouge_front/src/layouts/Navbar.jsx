@@ -87,7 +87,7 @@ const Navbar = () => {
                     </button>
                     {open && (
                       <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg">
-                        <button onClick={() => navigate(`/profil/${user_id}`)} className="block w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2">
+                        <button onClick={() => {navigate(`/profil/${user_id}`); setOpen(!open)}} className="block w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2">
                           <CgProfile /> Profile
                         </button>
                         <button

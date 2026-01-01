@@ -1,9 +1,10 @@
-import artis from "../../assets/images/elictric.PNG";
+
 import { FaLocationDot } from "react-icons/fa6";
-import { FaEye } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
 import Pagination from "../pagination";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineWatchLater } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { getArtisan, showArtisan } from "../../slices/artisanSlice";
 function SectionArtisan({villeInput , categoryInput}) {
@@ -14,7 +15,7 @@ function SectionArtisan({villeInput , categoryInput}) {
   const {data:artisans ,loading, error} = useSelector((state)=>state.artisans);
   useEffect(()=>{
     dispatch(getArtisan());
-  },[dispatch,artisans]);
+  },[dispatch]);
   const getJustArtisan = Array.isArray(artisans) 
   ? artisans.filter(u => u.role === 'artisan')
   : [];
@@ -39,36 +40,41 @@ function SectionArtisan({villeInput , categoryInput}) {
       indexOfFirstItem,
       indexOfLastItem
     );
-
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-600 text-lg">Loading...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-500 text-lg">Artisans not found</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="mt-15">
-      <h3 className="text-xl font-bold text-[#1D2B53] mb-6">Les artisans</h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {currentArtisans.map((art, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl shadow-md hover:shadow-lg transition flex flex-col overflow-hidden"
-          >
-            <img
-              src={art.image}
-              alt="artisan"
-              className="h-38 w-full object-cover"
-            />
-            <div className="p-4 flex flex-col h-full">
-              <h2 className="text-lg font-semibold text-[#1D2B53]">
-                {art.nom_complet}
-              </h2>
-
-              <p className="text-sm font-semibold text-[#2C5DA1]">{art.secteur}</p>
-              <p className="text-sm text-gray-500 flex justify-start items-center gap-2"><FaLocationDot />{art.ville}</p>
-
-              <p className="text-sm text-gray-400 mt-1">
-                {art.heures_par_jour}h/{art.jours_de_travail}jour
-              </p>
-
-              <div className="flex items-center gap-1 mt-3">
+  
+    <><section className="mx-auto max-w-[80%] mb-18 ">
+      <h className="text-2xl font-semibold text-[#FA7B0C]">Les artisans professionnels</h>
+        <div className="mx-auto grid grid-cols-1 md:grid-cols-4 flex gap-6 place-items-center mt-4">
+        {currentArtisans.map((art)=>(
+          <div key={art.id} className=" bg-white w-full rounded-xl shadow-md  flex flex-col p-4 transition-transform duration-300 hover:-translate-y-2 gap-3">
+              <img src={art.image} alt="image artisan" className='h-[40%] w-[40%] mx-auto rounded-xl' />
+              <div className='flex justify-between items-center'>
+                <h4 className='font-semibold text-[#1F2937]'>{art.nom_complet}</h4>
+                <span className='flex text-[#1F2937] items-center gap-1 text-sm font-medium'><FaLocationDot />{art.ville}</span>
+                </div>
+              <div className="flex justify-between items-center">
+                <span className="text-[#2C5DA1] font-medium">{art.secteur}</span>
+                <span className="flex items-center gap-1 text-[#1F2937] text-sm font-medium">
+                  <MdOutlineWatchLater className="text-lg" />
+                  {art.heures_par_jour}h/{art.jours_de_travail}j
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <span
                     key={star}
@@ -83,20 +89,18 @@ function SectionArtisan({villeInput , categoryInput}) {
                   {art.rating}<span className="font-bold">4.3</span> (127 avis)
                 </span>
               </div>
-              <div className="mt-auto pt-4">
-                <button  onClick={() => {
+              {/* <p className='line-clamp-2'>{art.propos}</p> */}
+                <button onClick={() => {
                     dispatch(showArtisan(art.id));
                     navigate(`/profil/${art.id}`);
-                  }} className="w-full bg-[#FA7B0C] cursor-pointer hover:bg-orange-600 text-white py-2 rounded-lg font-semibold transition flex justify-center items-center gap-2" >
-                  <FaEye /> <Link to="/profil">Voir le profil</Link> 
-                </button>
-              </div>
-            </div>
+                  }} className= 'w-full cursor-pointer text-white h-8 bg-[#FA7B0C] shadow-amber-600 rounded-full font-semibold flex justify-center items-center gap-2'><FaRegEye className='text-white' /> Voir profil</button>
           </div>
         ))}
-      </div>
-      <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-    </div>
+          
+        </div>
+    </section>
+    <Pagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+    </>
   );
 }
 

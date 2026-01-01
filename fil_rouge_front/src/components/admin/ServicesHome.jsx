@@ -1,32 +1,15 @@
-function ServicesHome() {
-  const tableData = [
-    {
-      id: "1",
-      title: "Peintre",
-      dateHeure: "12/02/2025"
-    },
-    {
-      id: "2",
-      title: "Plombier",
-      dateHeure: "12/02/2025"
-    },
-    {
-      id: "3",
-      title: "Climatisation",
-      dateHeure: "12/02/2025"
-    },
-    {
-      id: "4",
-      title: "Électricien",
-      dateHeure: "12/02/2025"
-    },
-    {
-      id: "5",
-      title: "Peintre",
-      dateHeure: "12/02/2025"
-    },
-  ];
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategory } from "../../slices/Category";
+import AddCategory from "./AddCategory";
 
+function ServicesHome() {
+  const [showForm , setShowForm] = useState(false);
+  const dispatch = useDispatch();
+  const {data:categories ,loading } = useSelector((state)=>state.categories);
+  useEffect(()=>{
+    dispatch(getCategory())
+  },[dispatch]);
   return (
     <div className="mx-25 mt-10">
       <div className="flex justify-between items-center mb-5">
@@ -36,9 +19,9 @@ function ServicesHome() {
       </div>
       <div className="flex justify-between gap-4">
         <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm w-[50%]">
-          {/* <button className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
+          <button onClick={()=>setShowForm(!showForm)} className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
             Ajouter Catigory
-          </button> */}
+          </button>
           <table className="w-full border-2 border-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -58,7 +41,7 @@ function ServicesHome() {
             </thead>
 
             <tbody className="bg-white divide-y divide-gray-200">
-              {tableData.map((item, index) => (
+              {categories.map((item, index) => (
                 <tr key={index}>
                   <td className="text-center text-xl py-4">{item.id}</td>
                   <td className="text-center text-xl py-4">{item.title}</td>
@@ -75,11 +58,12 @@ function ServicesHome() {
               ))}
             </tbody>
           </table>
+          {showForm ? <AddCategory setShowForm={setShowForm} showForm={showForm} /> : ''}
         </div>
-        <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm w-[50%]">
-          {/* <button className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
+        {/* <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm w-[50%]">
+          <button className="bg-blue-500 p-3 mb-2 rounded-lg text-white hover:bg-blue-600 cursor-pointer">
             Ajouter Services
-          </button> */}
+          </button>
           <table className="w-full border-2 border-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -116,7 +100,7 @@ function ServicesHome() {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     </div>
   );
