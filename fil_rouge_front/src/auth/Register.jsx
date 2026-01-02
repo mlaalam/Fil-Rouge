@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RegisterUser } from "../slices/RegisterSlice";
 import { useNavigate } from "react-router-dom";
-import artis from '../assets/images/elictric.PNG'
+import artis from '../assets/images/register.jpg'
 import {getUserRole, isAuthenticate } from "../services/auth";
 export default function Register() {
    const dispatch = useDispatch();

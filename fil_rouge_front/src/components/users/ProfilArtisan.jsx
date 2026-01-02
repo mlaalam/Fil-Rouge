@@ -26,9 +26,6 @@ export default function ProfilArtisan() {
   const [showForm, setShowForm] = useState(false);
   const dispatch = useDispatch();
   const { data: projects } = useSelector((state) => state.projects);
-  useEffect(() => {
-    dispatch(getMyProject());
-  }, [dispatch]);
   const userId = Number(getUserId());
   const totalProjectCom = projects.filter(
     (pro) => pro.artisan_id === userId && pro.status === 1
@@ -37,6 +34,7 @@ export default function ProfilArtisan() {
   const { id } = useParams();
   useEffect(() => {
     dispatch(showArtisan(id));
+    dispatch(getMyProject());
   }, [dispatch, id]);
   if (loading) {
     return (
@@ -56,7 +54,6 @@ export default function ProfilArtisan() {
   const userRole = getUserRole();
   return (
     <>
-      {userRole === "artisan" ? (
         <div className=" min-h-screen py-10 px-4">
           <div className="max-w-6xl mx-auto space-y-8">
             {userId === artisan?.id && (
@@ -158,7 +155,6 @@ export default function ProfilArtisan() {
                   ))}
                 </div>
               </div>
-                    {/* rating */}
               <Rating />
             </div>
           </div>
@@ -172,68 +168,7 @@ export default function ProfilArtisan() {
             ""
           )}
         </div>
-      ) : (
-        <div className="min-h-screen py-10 px-4">
-          <div className="max-w-6xl mx-auto space-y-8">
-            {userId === artisan?.id && (
-              <button
-                onClick={() => {
-                  setShowForm(!showForm);
-                  setSelectProfil(artisan);
-                }}
-                className="bg-blue-400 text-white p-3 font-bold rounded-lg hover:bg-blue-500 transition"
-              >
-                Modifier profil
-              </button>
-            )}
-
-            <div className="bg-[#F3EADF] rounded-2xl p-6 flex flex-col md:flex-row gap-6">
-              <div className="w-full md:w-1/3 flex flex-col items-center">
-                <img
-                  src={artisan.image}
-                  alt="artisan"
-                  className="rounded-full w-64 h-64 object-cover"
-                />
-
-                <a
-                  href={`https://wa.me/212${artisan.numero}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 w-full border-2 border-green-500 text-green-500 font-semibold py-2 rounded-full hover:bg-green-500 hover:text-white transition flex justify-center items-center gap-2"
-                >
-                  <FaWhatsapp /> WhatsApp
-                </a>
-              </div>
-              <div className="flex-1 space-y-3">
-                <h2 className="text-2xl font-bold text-[#1D2B53]">
-                  {artisan.nom_complet}
-                </h2>
-
-                <p className="text-blue-600 font-medium">{artisan.secteur}</p>
-
-                <p className="flex items-center gap-2 text-gray-600">
-                  <FaLocationDot /> {artisan.ville}
-                </p>
-                <p className="text-gray-700 text-sm mt-3">
-                  Propos :{artisan.propos}
-                </p>
-                <p className="flex items-center gap-2 text-sm text-gray-700 mt-2">
-                  <FaPhoneSquareAlt className="w-5 h-5" />
-                  +212 {artisan.numero}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {showForm && (
-            <EditProfil
-              showForm={showForm}
-              setShowForm={setShowForm}
-              profile={selectProfil}
-            />
-          )}
-        </div>
-      )}
+      
     </>
   );
 }

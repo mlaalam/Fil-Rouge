@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->dateTime('date_fin')->default('null')->after('status');
+            $table->dateTime('date_fin')->after('status')->nullable();
         });
     }
 

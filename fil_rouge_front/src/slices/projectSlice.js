@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteProject, finProject, getAllProject, getUserProject, storeProject, updateProject } from "../services/projectApi";
-import { MdTitle } from "react-icons/md";
+import { deleteProject, finProject, getAllProject, getUserProject, showProject, storeProject, updateProject } from "../services/projectApi";
 
 
 // get my project 
@@ -74,12 +73,26 @@ export const supprProject = createAsyncThunk(
       return rejectWithValue(err.response?.data);
     }
   }
+);
+// show project
+export const showOnePorject = createAsyncThunk(
+  'projects/showOneProject',
+  async(id,{rejectWithValue})=>{
+    try{
+        const res = await showProject(id)
+        return res
+    }catch (err) {
+      return rejectWithValue(err.response?.data);
+    }
+  }
 )
 
 const initialState = {
   loading:false,
   loadingSave:false,
+  loadingShow:false,
   data:[],
+  project:{},
   error:null,
   loadingDone:false,
   loadingDel:false,
@@ -115,6 +128,19 @@ extraReducers: (builder) => {
       })
       .addCase(getProject.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+      })
+    // show project 
+      .addCase(showOnePorject.pending, (state) => {
+        state.loadingShow = true;
+        state.error = null;
+      })
+      .addCase(showOnePorject.fulfilled, (state, action) => {
+        state.loadingShow = false;
+        state.project = action.payload;
+      })
+      .addCase(showOnePorject.rejected, (state, action) => {
+        state.loadingShow = false;
         state.error = action.payload;
       })
     // create project 

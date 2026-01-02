@@ -37,3 +37,13 @@ export const suspend = async (id) =>{
   const res = await api.put(`artisans/${id}/suspend`);
   return res.data.artisan;
 }
+
+
+export const getRating = async (id) =>{
+  const res = await api.get(`/ratings/${id}`);
+  return res.data
+}
+export const saveRating = async (id , rating , comment) =>{
+  const res = await api.post(`/artisans/${id}/rating`,{id,rating ,comment});
+  return res.data
+}

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model
 {
     use HasFactory;
-    protected $fillable = ['rating','rating','artisan_id','client_id'];
+    protected $table = 'artisan_ratings';
+    protected $fillable = ['rating','comment','artisan_id','client_id'];
 
     public function artisan()
     {

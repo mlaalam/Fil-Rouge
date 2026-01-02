@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getProject } from '../slices/projectSlice';
 import Pagination from "./pagination";
+import ShowProject from "./ShowProject";
 function ProjectsArtisan() {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
+  const [showProject , setShowProject] = useState(false);
   const {data:projects ,loading} = useSelector((state)=>state.projects);
   useEffect(()=>{
     dispatch(getProject())
@@ -48,7 +50,8 @@ function ProjectsArtisan() {
                   </span>
                 </div>
                 <p className='line-clamp-2'>{art.description}</p>
-                  <button className= 'w-full cursor-pointer text-white h-8 bg-[#FA7B0C] shadow-amber-600 rounded-full font-semibold flex justify-center items-center gap-2'><FaRegEye className='text-white' /> Voir project</button>
+                  <button onClick={()=> setShowProject(true)} className= 'w-full cursor-pointer text-white h-8 bg-[#FA7B0C] shadow-amber-600 rounded-full font-semibold flex justify-center items-center gap-2'><FaRegEye className='text-white' /> Voir project</button>
+                  {showProject ? <ShowProject /> : ''}
             </div>
           ))}
             

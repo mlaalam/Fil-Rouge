@@ -4,6 +4,7 @@ use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ServicesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,12 @@ Route::controller(CategoryController::class)->group(function(){
   Route::post('categories','store')->middleware('auth:sanctum');
   Route::put('categories/{id}','update')->middleware('auth:sanctum');
   Route::delete('categories/{id}','destroy')->middleware('auth:sanctum');
+});
+Route::controller(RatingController::class)->group(function(){
+  Route::get('ratings/{id}','index');
+  Route::post('artisans/{artisan}/rating','store')->middleware('auth:sanctum');
+  // Route::put('categories/{id}','update')->middleware('auth:sanctum');
+  // Route::delete('categories/{id}','destroy')->middleware('auth:sanctum');
 });
 
 Route::controller(ArtisanController::class)->group(function(){

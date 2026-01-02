@@ -5,6 +5,10 @@ export const getUserProject = async () => {
   const res = await api.get("/myprojects");
   return res.data.projects;
 };
+export const showProject = async (id) => {
+  const res = await api.get(`/projects${id}`);
+  return res.data.project;
+};
 export const getAllProject = async () => {
   const res = await api.get("/projects");
   return res.data.projects;
